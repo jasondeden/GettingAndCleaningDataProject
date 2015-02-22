@@ -1,15 +1,15 @@
-Getting and Cleaning Data Project ReadMe 
+#Getting and Cleaning Data Project ReadMe 
 
 The contents of this repo are as follows:
 -run_analysis.R -- the script which runs the project
 -CodeBook.md -- describes the variables used in the script
 -README.md -- describes how the script works
 
-Part 0: Commented out download and folder creation
+##Part 0: Commented out download and folder creation
 
 I initially created the script so that it would download the file and create a unique directory within which to work once the script was launched. Given that the course instructions said to assume the file was already present, I commented these lines of code out, but they could easily be uncommented if you wanted to run the script without having first downloaded the file or created a directory.
 
-Part 1: Merge training and test sets to create one data set
+##Part 1: Merge training and test sets to create one data set
 
 The first step is to unzip the downloaded data file (in my script, named "SamsungData.zip").
 
@@ -20,14 +20,14 @@ There are three major types of data in the text files that make up the data: x v
 Since the bulk of the data massaging that needs to take place is with the x values, the script reads those in first as xtrain and xtest data frames, then uses rbind to combine them into a combodata data frame. This completes the requirements for part 1.
 
 
-Part 2: Extract Mean and Standard Deviation values
+##Part 2: Extract Mean and Standard Deviation values
 
 The next part of the exercise requires the script to read a table called features.txt, which contains two columns: a feature ID and an associated feature name. For our exercise, we only want variables with either "mean" or "std" in their name, and so we use grep to create a vector that contains just those row numbers that meet that criteria. We then subset combodata into a new data frame, combodatasub1, using the list of row numbers to indicate which columns should be included in the subset.
 
 This completes the requirements for Part 2.
 
 
-Part 3: Use descriptive activity names to name activities in the dataset.
+##Part 3: Use descriptive activity names to name activities in the dataset.
 
 Now we need to read in the y values - which contain only a single column, which we will label "activity." We do this for both the train and test data, the once again use rbind to put them together into a data frame called comboact.
 
@@ -38,8 +38,7 @@ Once the comboact data frame is instantiated, the script replaces the numeric va
 This completes the requirements for Part 3. 
 
 
-
-Part 4: Appropriately label the data set with descriptive variable names.
+##Part 4: Appropriately label the data set with descriptive variable names.
 
 For the first time you need to actually create a vector of the featurelist variables, subsetted by just the ones we used to create our combodatasubset1 data frame. Here, the script takes the featurelist dataset created earlier and creates a subset called featurelistsmall, which subsets the *rows* this time by the numbers we used earlier to subset the columns for combodatasubset1. This generates a dataframe that has the same number of rows as our combodatasubset1 data frame has columns.
 
@@ -48,7 +47,7 @@ Next we take the feature names out of that dataframe and push them into a vector
 This meets all requirements for Part 4, but we're not finished yet...
 
 
-Part 5: Create a second, independent tidy data set with the variable average for each activity and subject.
+##Part 5: Create a second, independent tidy data set with the variable average for each activity and subject.
 
 To accomplish this task, I employed the aggregate function to aggregate our combodatasub1 data frame with the subject and activity variables of the finaldata data frame, and then calculate the mean. Once this is done, all that's left is to tidy up the column names for the subject and activity columns, and then write this data to a table in the working directory.
 
